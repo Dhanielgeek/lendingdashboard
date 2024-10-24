@@ -1,5 +1,12 @@
+import { RouterProvider } from "react-router-dom";
+import { Routes } from "./Routes/routes";
+
 const App = () => {
-  return <div className="w-full h-screen bg-black">App</div>;
+  return (
+    <>
+      <RouterProvider router={Routes} />
+    </>
+  );
 };
 
 export default App;
