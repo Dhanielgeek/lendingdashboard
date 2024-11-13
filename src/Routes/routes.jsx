@@ -4,6 +4,7 @@ import Login from "../Auth/login";
 import Register from "../Auth/register";
 
 import WrapperAu from "../layout/WrapperAu";
+import Ques from "../layout/Ques";
 
 export const Routes = createBrowserRouter([
   {
@@ -23,5 +24,9 @@ export const Routes = createBrowserRouter([
         element: <Register />,
       },
     ],
+  },
+  {
+    path: "ques",
+    element: <Ques />,
   },
 ]);
