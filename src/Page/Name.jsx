@@ -13,11 +13,11 @@ const Name = () => {
 
   return (
     <div className="w-full h-screen flex justify-center flex-col items-center">
-      <div className="w-[45%] h-[7%] bg-[#DDF0E4] rounded text-green-800 font-semibold flex justify-center items-center gap-2 ">
+      <div className="w-[45%] h-[7%] bg-[#DDF0E4] rounded text-green-800 font-semibold flex justify-center items-center gap-2 max-md:w-[90%]">
         <MdAccessTime size={20} />
         <p>Check your rate in seconds!</p>
       </div>
-      <div className="w-[45%] h-[18%]  gap-2 flex-col flex justify-center items-start">
+      <div className="w-[45%] h-[18%]  gap-2 flex-col flex justify-center items-start max-md:w-[90%]">
         <p className=" text-4xl font-bold text-blue-950">What’s your name?</p>
         <p className=" text-xl text-blue-950">
           This helps us verify your identity and create your customized offer.
@@ -25,7 +25,7 @@ const Name = () => {
       </div>
       <form
         action=""
-        className="w-[45%] h-[70%]  flex flex-col justify-around items-center"
+        className="w-[45%] h-[70%]  flex flex-col justify-around items-center max-md:w-[90%]"
       >
         <div className="w-full h-[20%] flex-col flex justify-center gap-1  items-start">
           <label htmlFor="" className=" font-semibold text-xl text-blue-950">
