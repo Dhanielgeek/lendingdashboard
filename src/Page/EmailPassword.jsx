@@ -30,7 +30,7 @@ const EmailPassword = () => {
 
   return (
     <div className="w-full h-screen flex justify-around flex-col items-center">
-      <div className="w-[45%] h-[18%] gap-2 flex-col flex justify-center items-start mt-4">
+      <div className="w-[45%] h-[18%] gap-2 flex-col flex justify-center items-start mt-4 max-md:w-[90%]">
         <p className="text-4xl font-bold text-blue-950">
           What’s your email and password?
         </p>
@@ -40,7 +40,7 @@ const EmailPassword = () => {
         </p>
       </div>
       <form
-        className="w-[45%] h-[70%] flex flex-col justify-around items-center"
+        className="w-[45%] h-[70%] flex flex-col justify-around items-center max-md:w-[90%]"
         onSubmit={handleNextClick}
       >
         <div className="w-full h-[20%] flex-col flex justify-center gap-1 items-start">
@@ -75,7 +75,7 @@ const EmailPassword = () => {
           />
         </div>
 
-        <div className="w-full h-[26%] flex  items-start gap-3 px-2">
+        <div className="w-full h-[26%] flex  items-start gap-3 px-2 max-md:h-[35%]">
           <input
             type="checkbox"
             id="agreement"
