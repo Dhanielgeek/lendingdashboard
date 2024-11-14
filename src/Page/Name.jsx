@@ -8,7 +8,7 @@ const Name = () => {
 
   const handleNextClick = () => {
     handleNext(); // Update progress
-    navigate("/ques/email"); // Navigate to the next step
+    navigate("/ques/emailpass"); // Navigate to the next step
   };
 
   return (
