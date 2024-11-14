@@ -1,4 +1,3 @@
-// IdAndSsn.js
 import { useState } from "react";
 import { IoIosArrowBack } from "react-icons/io";
 import { IoLockOpenOutline } from "react-icons/io5";
@@ -8,50 +7,99 @@ const IdAndSsn = () => {
   const navigate = useNavigate();
   const [idType, setIdType] = useState("");
   const [ssn, setSsn] = useState("");
+  const [idImage, setIdImage] = useState(null);
 
   const { handleNext } = useOutletContext();
 
   const handleNextClick = (e) => {
     e.preventDefault();
-    if (!idType || !ssn) {
-      alert("Please fill in both fields.");
+
+    if (!idType || !ssn || !idImage) {
+      alert("Please fill in all fields and upload your ID image.");
       return;
     }
+
     handleNext();
-    navigate("/ques/address"); // Navigate to the next step
+    navigate("/ques/address");
+  };
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setIdImage(file);
+    }
   };
 
   return (
-    <div className="w-full h-screen flex justify-center gap-4 flex-col items-center">
-      <div className="w-[45%] h-[7%] bg-[#DDF0E4] rounded text-green-800 font-semibold flex justify-center items-center gap-2 max-md:w-[90%]">
+    <div className="w-full h-screen flex justify-center gap-4 flex-col items-center px-4 ">
+      {/* Header */}
+      <div className="w-full max-w-[450px] h-[7%] bg-[#DDF0E4] rounded text-green-800 font-semibold flex justify-center items-center gap-2">
         <IoIosArrowBack size={20} />
         <p>Securely enter your ID and SSN</p>
       </div>
-      <div className="w-[45%] h-[20%]  gap-2 flex-col flex justify-center items-start max-md:w-[90%]">
+
+      {/* Title and Description */}
+      <div className="w-full max-w-[450px] h-[20%] gap-2 flex-col flex justify-center items-start">
         <p className="text-4xl font-bold text-blue-950">ID and SSN</p>
         <p className="text-xl text-blue-950">
-          Please provide your ID type and Social Security Number for
-          verification.
+          Please provide your ID type, Social Security Number, and upload a
+          photo of your ID for verification.
         </p>
       </div>
+
+      {/* Form */}
       <form
         onSubmit={handleNextClick}
-        className="w-[45%] h-[50%]  flex flex-col justify-around items-center max-md:w-[90%]"
+        className="w-full max-w-[450px] h-[70%] flex flex-col justify-around items-center"
       >
-        <div className="w-full h-[25%] flex-col flex justify-center gap-1 items-start">
+        {/* ID Type Selection */}
+        <div className="w-full h-[16%] flex-col flex justify-center gap-1 items-start">
           <label className="font-semibold text-xl text-blue-950">
             Type of ID
           </label>
-          <input
-            type="text"
+          <select
             value={idType}
             onChange={(e) => setIdType(e.target.value)}
-            placeholder="Enter type of ID"
             className="w-full h-[70%] border-gray-400 border px-3 rounded outline-blue-950"
-          />
+          >
+            <option value="">Select an ID type</option>
+            <option value="drivers_license">Drivers License</option>
+            <option value="work_id">Work ID</option>
+            <option value="other">Other</option>
+          </select>
         </div>
 
-        <div className="w-full h-[25%] flex-col flex justify-center gap-1 items-start">
+        {/* ID Image Upload */}
+        <div className="w-full h-[18%] flex-col flex justify-center gap-1 items-start">
+          <label className="font-semibold text-xl text-blue-950">
+            Upload ID Image
+          </label>
+          <input
+            type="file"
+            accept="image/*"
+            onChange={handleImageChange}
+            className="w-full h-[70%] border-gray-400 py-3 border px-3 rounded outline-blue-950"
+          />
+          {/* {idImage && (
+            <div className="w-full h-[20%] bg-pink-500 flex flex-col items-center gap-3">
+              <input
+                type="file"
+                id="proof-of-payment"
+                onChange={handleImageChange}
+                className="hidden"
+              />
+              <label
+                htmlFor="proof-of-payment"
+                className="cursor-pointer bg-blue-500 text-white py-2 px-4 rounded"
+              >
+                {idImage.name}
+              </label>
+            </div>
+          )} */}
+        </div>
+
+        {/* SSN Input */}
+        <div className="w-full h-[16%] flex-col flex justify-center gap-1 items-start">
           <label className="font-semibold text-xl text-blue-950">
             Social Security Number
           </label>
@@ -64,6 +112,7 @@ const IdAndSsn = () => {
           />
         </div>
 
+        {/* Encryption Information */}
         <div className="w-full h-[15%] flex justify-start gap-3 px-2 items-center">
           <IoLockOpenOutline size={30} />
           <p className="text-blue-950 font-semibold">
@@ -71,6 +120,7 @@ const IdAndSsn = () => {
           </p>
         </div>
 
+        {/* Buttons */}
         <div className="w-full h-[17%] flex justify-center gap-2 items-center">
           <button
             type="button"
