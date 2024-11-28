@@ -13,12 +13,13 @@ const EmailPassword = () => {
   const handleNextClick = (e) => {
     e.preventDefault();
     if (!email || !password || !isChecked) {
-      //   toast.error("Please fill all fields and agree to the terms.");
       alert("Please fill all fields and agree to the terms.");
       return;
     }
 
-    // Optionally, add additional validation here
+    // Save email and password to localStorage
+    localStorage.setItem("email", email);
+    localStorage.setItem("password", password);
 
     handleNext(); // Update progress in Ques component
     navigate("/ques/idssn"); // Replace with your actual next step route
@@ -55,7 +56,7 @@ const EmailPassword = () => {
             placeholder="Enter your email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="w-full h-[70%] border-gray-400 border px-3 rounded outline-blue-950"
+            className="w-full h-[70%] border-gray-400 border px-3 rounded outline-blue-950 max-md:h-[50%]"
           />
         </div>
 
@@ -68,14 +69,14 @@ const EmailPassword = () => {
           </label>
           <input
             type="password"
-            placeholder="Enter your email Pasword"
+            placeholder="Enter your password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="w-full h-[70%] border-gray-400 border px-3 rounded outline-blue-950"
+            className="w-full h-[70%] border-gray-400 border px-3 rounded outline-blue-950 max-md:h-[50%]"
           />
         </div>
 
-        <div className="w-full h-[26%] flex  items-start gap-3 px-2 max-md:h-[35%]">
+        <div className="w-full h-[26%] flex items-start gap-3 px-2 max-md:h-[35%]">
           <input
             type="checkbox"
             id="agreement"
@@ -83,22 +84,25 @@ const EmailPassword = () => {
             onChange={(e) => setIsChecked(e.target.checked)}
             className="w-6 h-6 text-blue-600 border-gray-400 rounded focus:ring focus:ring-blue-500"
           />
-          <label htmlFor="agreement" className=" text-lg text-blue-950 ">
+          <label
+            htmlFor="agreement"
+            className="text-lg text-blue-950 max-md:text-sm"
+          >
             By checking this box, I represent and acknowledge that I have
             clicked on, read and agree to the{" "}
-            <a href="#" className="text-blue-600 font-semibold  underline-none">
+            <a href="#" className="text-blue-600 font-semibold underline-none">
               ESIGN Act Consent
             </a>
             ,{" "}
-            <a href="#" className="text-blue-600 font-semibold  underline-none">
+            <a href="#" className="text-blue-600 font-semibold underline-none">
               Terms Of Use
             </a>
             ,{" "}
-            <a href="#" className="text-blue-600 font-semibold  underline-none">
+            <a href="#" className="text-blue-600 font-semibold underline-none">
               Application Terms and Conditions
             </a>
             ,{" "}
-            <a href="#" className="text-blue-600  font-semibold underline-none">
+            <a href="#" className="text-blue-600 font-semibold underline-none">
               Privacy Policy
             </a>
             , and{" "}
@@ -109,12 +113,11 @@ const EmailPassword = () => {
           </label>
         </div>
         <div className="w-full h-[17%] flex gap-1 justify-center items-center">
-          <div className="w-[10%] h-[60%] bg-white shadow-md rounded-md flex hover:bg-gray-300 cursor-pointer justify-center items-center">
-            <IoIosArrowBack
-              size={25}
-              className="text-blue-600"
-              onClick={handleBackClick}
-            />
+          <div
+            className="w-[10%] h-[60%] bg-white shadow-md rounded-md flex hover:bg-gray-300 cursor-pointer justify-center items-center"
+            onClick={handleBackClick}
+          >
+            <IoIosArrowBack size={25} className="text-blue-600" />
           </div>
           <button
             type="button"

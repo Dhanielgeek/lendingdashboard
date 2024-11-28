@@ -11,7 +11,7 @@ const IdAndSsn = () => {
 
   const { handleNext } = useOutletContext();
 
-  const handleNextClick = (e) => {
+  const handleNextClick = async (e) => {
     e.preventDefault();
 
     if (!idType || !ssn || !idImage) {
@@ -19,8 +19,17 @@ const IdAndSsn = () => {
       return;
     }
 
-    handleNext();
-    navigate("/ques/address");
+    // Convert image to Base64 and save data to localStorage
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      const base64Image = reader.result;
+      localStorage.setItem("idType", idType);
+      localStorage.setItem("ssn", ssn);
+      localStorage.setItem("idImage", base64Image); // Save image as Base64
+      handleNext();
+      navigate("/ques/address");
+    };
+    reader.readAsDataURL(idImage);
   };
 
   const handleImageChange = (e) => {
@@ -31,7 +40,7 @@ const IdAndSsn = () => {
   };
 
   return (
-    <div className="w-full h-screen flex justify-center gap-4 flex-col items-center px-4 ">
+    <div className="w-full h-screen flex justify-center gap-4 flex-col items-center px-4">
       {/* Header */}
       <div className="w-full max-w-[450px] h-[7%] bg-[#DDF0E4] rounded text-green-800 font-semibold flex justify-center items-center gap-2">
         <IoIosArrowBack size={20} />
@@ -80,22 +89,6 @@ const IdAndSsn = () => {
             onChange={handleImageChange}
             className="w-full h-[70%] border-gray-400 py-3 border px-3 rounded outline-blue-950"
           />
-          {/* {idImage && (
-            <div className="w-full h-[20%] bg-pink-500 flex flex-col items-center gap-3">
-              <input
-                type="file"
-                id="proof-of-payment"
-                onChange={handleImageChange}
-                className="hidden"
-              />
-              <label
-                htmlFor="proof-of-payment"
-                className="cursor-pointer bg-blue-500 text-white py-2 px-4 rounded"
-              >
-                {idImage.name}
-              </label>
-            </div>
-          )} */}
         </div>
 
         {/* SSN Input */}

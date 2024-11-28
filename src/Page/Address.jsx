@@ -1,4 +1,3 @@
-// Address.js
 import { useState } from "react";
 import { IoIosArrowBack } from "react-icons/io";
 import { IoLockOpenOutline } from "react-icons/io5";
@@ -15,6 +14,10 @@ const Address = () => {
       alert("Please enter your address.");
       return;
     }
+
+    // Save the address to localStorage
+    localStorage.setItem("address", address);
+
     handleNext();
     navigate("/ques/bankinfo"); // Navigate to the next step
   };

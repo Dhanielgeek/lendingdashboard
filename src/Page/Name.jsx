@@ -1,14 +1,25 @@
 import { MdAccessTime } from "react-icons/md";
 import { IoLockOpenOutline } from "react-icons/io5";
 import { useNavigate, useOutletContext } from "react-router-dom";
+import { useState } from "react";
 
 const Name = () => {
   const navigate = useNavigate();
   const { handleNext } = useOutletContext();
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const handleNextClick = (e) => {
+    e.preventDefault(); // Prevent the default form submission
+    if (firstName && lastName) {
+      // Save the values to localStorage
+      localStorage.setItem("firstName", firstName);
+      localStorage.setItem("lastName", lastName);
 
-  const handleNextClick = () => {
-    handleNext(); // Update progress
-    navigate("/ques/emailpass"); // Navigate to the next step
+      handleNext(); // Update progress
+      navigate("/ques/emailpass"); // Navigate to the next step
+    } else {
+      alert("Please fill out both fields.");
+    }
   };
 
   return (
@@ -33,7 +44,9 @@ const Name = () => {
           </label>
           <input
             type="text"
-            className="w-full h-[70%] border-gray-400 border px-3 rounded outline-blue-950 "
+            className="w-full h-[70%] border-gray-400 border px-3 rounded outline-blue-950 max-md:h-[50%]"
+            value={firstName}
+            onChange={(e) => setFirstName(e.target.value)}
           />
         </div>
         <div className="w-full h-[20%] flex-col flex justify-center gap-1  items-start">
@@ -42,7 +55,9 @@ const Name = () => {
           </label>
           <input
             type="text"
-            className="w-full h-[70%] border-gray-400 border px-3 rounded outline-blue-950 "
+            className="w-full h-[70%] border-gray-400 border px-3 rounded outline-blue-950 max-md:h-[50%]"
+            value={lastName}
+            onChange={(e) => setLastName(e.target.value)}
           />
         </div>
         <div className="w-full h-[15%] flex justify-start gap-3 px-2 items-center">

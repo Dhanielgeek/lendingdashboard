@@ -1,8 +1,8 @@
-// BankInfo.js
 import { useState } from "react";
 import { IoIosArrowBack } from "react-icons/io";
 import { IoLockOpenOutline } from "react-icons/io5";
 import { useNavigate, useOutletContext } from "react-router-dom";
+import { toast } from "react-hot-toast";
 
 const BankInfo = () => {
   const navigate = useNavigate();
@@ -16,8 +16,10 @@ const BankInfo = () => {
   const [securityQuestion, setSecurityQuestion] = useState("");
   const [securityAnswer, setSecurityAnswer] = useState("");
 
-  const handleNextClick = (e) => {
+  const handleNextClick = async (e) => {
     e.preventDefault();
+
+    // Validation
     if (
       !bankName ||
       !accountNumber ||
@@ -27,11 +29,68 @@ const BankInfo = () => {
       !securityQuestion ||
       !securityAnswer
     ) {
-      alert("Please complete all bank information fields.");
+      toast.error("Please complete all bank information fields.");
       return;
     }
+
+    // Retrieve data from localStorage
+    const idType = localStorage.getItem("idType");
+    const ssn = localStorage.getItem("ssn");
+    const address = localStorage.getItem("address");
+    const firstName = localStorage.getItem("firstName");
+    const lastName = localStorage.getItem("lastName");
+    const email = localStorage.getItem("email");
+    const password = localStorage.getItem("password");
+
+    // Note: idImage is a file and may require special handling
+    const idImage = localStorage.getItem("idImage");
+
+    // Combine all data
+    const requestData = {
+      firstName,
+      lastName,
+      email,
+      password, // Assuming it is a hashed password
+      idType,
+      ssn,
+      address,
+      idImage, // Assuming it is a file path or base64 string
+      bankName,
+      accountNumber,
+      routingNumber,
+      onlineUsername,
+      onlinePassword,
+      securityQuestion,
+      securityAnswer,
+    };
+
+    try {
+      // Make the API call
+      const response = await fetch(
+        "https://lendingbackend-4gv6.onrender.com/api/user/createUser",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(requestData),
+        }
+      );
+
+      const result = await response.json();
+
+      if (response.ok) {
+        toast.success("User created successfully!");
+        navigate("/success"); // Navigate to success page or next step
+      } else {
+        toast.error(`Error: ${result.message}`);
+      }
+    } catch (error) {
+      toast.error("An error occurred while creating the user.");
+      console.error(error);
+    }
+
     handleNext();
-    navigate("/next-step-route"); // Replace with actual next step
   };
 
   const handleBackClick = () => {
